@@ -67,15 +67,15 @@ class _ProgressScreenState extends State<ProgressScreen>
   String _getCityForSeconds(int seconds) {
     switch (seconds) {
       case 10:
-        return 'Rennes';
-      case 20:
-        return 'Paris';
-      case 30:
         return 'Dakar';
+      case 20:
+        return 'Mbour';
+      case 30:
+        return 'Kaolack';
       case 40:
-        return 'Bordeaux';
+        return 'Saint-louis';
       case 50:
-        return 'Lyon';
+        return 'Fatick';
       default:
         return '';
     }
