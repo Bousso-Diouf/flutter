@@ -53,17 +53,16 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
-  # The following line ensures that the Material Icons font is
-  # included with your application, so that you can use the icons in
-  # the material Icons class.
+  # La ligne suivante assure que la police Material Icons est
+  # incluse avec votre application, de sorte que vous puissiez utiliser les icônes dans
+  # la classe des icônes Material.
   uses-material-design: true
+  assets:
+    - assets/meteo.jpg
 
-  # To add assets to your application, add an assets section, like this:
-  # assets:
-  #   - images/a_dot_burr.jpeg
-  #   - images/a_dot_ham.jpeg
-
+  # Pour ajouter des ressources à votre application, ajoutez une section de ressources, comme ceci :
+ 
+    # - images/a_dot_ham.jpeg
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware
 

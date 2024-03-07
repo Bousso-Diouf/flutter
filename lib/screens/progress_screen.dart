@@ -105,7 +105,7 @@ class _ProgressScreenState extends State<ProgressScreen>
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Écran de progression'),
+        title: Text('Régions'),
       ),
       body: Column(
         children: [
