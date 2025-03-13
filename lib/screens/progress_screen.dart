@@ -8,12 +8,11 @@ class ProgressScreen extends StatefulWidget {
   _ProgressScreenState createState() => _ProgressScreenState();
 }
 
-class _ProgressScreenState extends State<ProgressScreen>
-    with SingleTickerProviderStateMixin {
+class _ProgressScreenState extends State<ProgressScreen> with SingleTickerProviderStateMixin {
   late AnimationController _controller;
   late int _secondsElapsed;
   bool _isLoading = true;
-  Set<String> _processedCities = Set<String>(); 
+  Set<String> _processedCities = Set<String>();
   Map<String, WeatherData> _weatherDataMap = {}; // Stockage des données météorologiques pour chaque ville
 
   List<String> messages = [
@@ -66,18 +65,12 @@ class _ProgressScreenState extends State<ProgressScreen>
 
   String _getCityForSeconds(int seconds) {
     switch (seconds) {
-      case 10:
-        return 'Dakar';
-      case 20:
-        return 'Mbour';
-      case 30:
-        return 'Kaolack';
-      case 40:
-        return 'Saint-louis';
-      case 50:
-        return 'Fatick';
-      default:
-        return '';
+      case 10: return 'Dakar';
+      case 20: return 'Mbour';
+      case 30: return 'Kaolack';
+      case 40: return 'Saint-louis';
+      case 50: return 'Fatick';
+      default: return '';
     }
   }
 
@@ -115,11 +108,39 @@ class _ProgressScreenState extends State<ProgressScreen>
                 return ListTile(
                   title: Text(city),
                   onTap: () {
+                    // Récupérer la latitude et longitude pour chaque ville
+                    double latitude = 0.0; // Valeur par défaut, remplacer selon la ville
+                    double longitude = 0.0; // Valeur par défaut, remplacer selon la ville
+
+                    // Ajouter des coordonnées spécifiques à chaque ville
+                    if (city == "Dakar") {
+                      latitude = 14.6928;
+                      longitude = -17.4467;
+                    } else if (city == "Mbour") {
+                      latitude = 14.4000;
+                      longitude = -16.9499;
+                    } else if (city == "Kaolack") {
+                      latitude = 14.0667;
+                      longitude = -15.5000;
+                    } else if (city == "Saint-louis") {
+                      latitude = 16.0014;
+                      longitude = -16.4903;
+                    } else if (city == "Fatick") {
+                      latitude = 14.6570;
+                      longitude = -16.4567;
+                    }
+
+                    // Passer à la page de détails de la ville avec les coordonnées
                     Navigator.push(
                       context,
                       MaterialPageRoute(
-                        builder: (context) => CityDetailScreen(city: city,temperature: getTemperature(city),
-      cloudCoverage: getCloudCoverage(city),),
+                        builder: (context) => CityDetailScreen(
+                          city: city,
+                          temperature: getTemperature(city),
+                          cloudCoverage: getCloudCoverage(city),
+                          latitude: latitude,
+                          longitude: longitude,
+                        ),
                       ),
                     );
                   },
@@ -139,26 +160,26 @@ class _ProgressScreenState extends State<ProgressScreen>
             child: Column(
               children: [
                 (_isLoading)
-                  ? Column(
-                      children: [
-                        LinearProgressIndicator(
-                          value: _controller.value,
-                          minHeight: 20,
-                          backgroundColor: Colors.grey,
-                          valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
-                        ),
-                        SizedBox(height: 10), // Ajout d'un espace entre la jauge et le texte d'attente
-                        Text(messages[currentMessageIndex]),
-                      ],
-                    )
-                  : Container(), // Ne rien afficher lorsque _isLoading est false
-                if (!_isLoading && _processedCities.length == 5) // Afficher le bouton seulement si _isLoading est false et toutes les villes sont chargées
+                    ? Column(
+                  children: [
+                    LinearProgressIndicator(
+                      value: _controller.value,
+                      minHeight: 20,
+                      backgroundColor: Colors.grey,
+                      valueColor: AlwaysStoppedAnimation<Color>(Colors.blue),
+                    ),
+                    SizedBox(height: 10),
+                    Text(messages[currentMessageIndex]),
+                  ],
+                )
+                    : Container(),
+                if (!_isLoading && _processedCities.length == 5)
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
                         _isLoading = true;
                         _processedCities.clear();
-                        _weatherDataMap.clear(); // Effacer les données météorologiques stockées
+                        _weatherDataMap.clear();
                         _controller.reset();
                         _controller.forward();
                       });
